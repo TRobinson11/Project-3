@@ -207,6 +207,8 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
   cpm.forEach(function(d) {
     d.date = parseDate(d.date);
     d.id = +d.id;
+    d.long = +d.Long;
+    d.lat = +d.Lat;
     d.cpm = +d.cpm;
     d.user = +d.user;
   });
@@ -237,7 +239,7 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
               .style("left", d3.event.pageX - 50 + "px")
               .style("top", d3.event.pageY + 20 + "px")
               .style("display", "inline-block")
-              .html("Sensor-ID = " + (d.id) + "<br>" + (d.cpm) + " CPM" + "<br>" + "Timestamp: " + (d.date) + "<br>" + "User-id: " + (d.user));
+              .html("Sensor-ID = " + (d.id) + "<br>" + (d.cpm) + " CPM" + "<br>" + "Timestamp: " + (d.date) + "<br>" + "Longitude: " + (d.long) + " Latitude: " + (d.lat) + "<br>" + "User-id: " + (d.userid));
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
 
