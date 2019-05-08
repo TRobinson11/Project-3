@@ -32,9 +32,42 @@ body {
   text-align: center;
 }
 
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+.dot {
+  stroke: #000;
+}
+
+#myList{
+
+      height: 400px;
+    width: 10%;
+    float: left;
+    font-size: 15px;
+    color: transparent;
+}
+
+#chart{
+
+      height: 400px;
+    width: 70%;
+    float: left;
+}
 
 </style>
 <body>
+  <div>
+      <div id = "static"></div>
+      <div id="mobile"></div>
+      <div id = "chart"></div>
+      <div id="myList"></div>
+      
+  </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
@@ -42,12 +75,9 @@ body {
 
 <script>
 
-
 var margin = {top: 20, right: 90, bottom: 30, left: 50},
     width = 1800 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom;
-
-var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
 var parseDate = d3.time.format("%m/%d/%Y %H:%M").parse,
     formatDate = d3.time.format("%b %d %H:%M");
@@ -62,7 +92,8 @@ var x = d3.time.scale().range([0, width]),
 var xStep = 5e5,
     yStep = 10;
 
-var svg = d3.select("body").append("svg")
+// Static svg
+var svg = d3.select("#static").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -77,6 +108,9 @@ d3.csv("StaticSensorReadings.csv", function(error, cpm) {
     d.id = +d.id;
     d.cpm = +d.cpm;
   });
+
+var tooltip = d3.select("#static").append("div").attr("class", "toolTip");
+
 
   // Compute the scale domains.
   x.domain(d3.extent(cpm, function(d) { return d.date; }));
@@ -106,13 +140,9 @@ d3.csv("StaticSensorReadings.csv", function(error, cpm) {
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
 
-
-
-      
-
   // Add a legend for the color values.
   var legend = svg.selectAll(".legend")
-      .data(z.ticks(8).slice(1).reverse())
+      .data(z.ticks(9).slice(1).reverse())
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(" + (width + 20) + "," + (20 + i * 20) + ")"; });
@@ -127,7 +157,7 @@ d3.csv("StaticSensorReadings.csv", function(error, cpm) {
       .attr("y", 10)
       .attr("dy", ".35em")
       .text(function(d) { return d;})
-     // .text(String);
+    //  .text(String);
 
   svg.append("text")
       .attr("class", "label")
@@ -161,7 +191,9 @@ d3.csv("StaticSensorReadings.csv", function(error, cpm) {
       .text("CPM");
 });
 
-var svg1 = d3.select("body").append("svg")
+
+// Mobile svg
+var svg1 = d3.select("#mobile").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -177,6 +209,8 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
     d.cpm = +d.cpm;
     d.user = +d.user;
   });
+
+  var tooltip = d3.select("#mobile").append("div").attr("class", "toolTip");
 
   // Compute the scale domains.
   x.domain(d3.extent(cpm, function(d) { return d.date; }));
@@ -205,10 +239,6 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
               .html("Sensor-ID = " + (d.id) + "<br>" + (d.cpm) + " CPM" + "<br>" + "Timestamp: " + (d.date) + "<br>" + "User-id: " + (d.user));
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
-
-
-
-      
 
   // Add a legend for the color values.
   var legend = svg1.selectAll(".legend")
@@ -260,5 +290,176 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
       .attr("transform", "rotate(-90)")
       .text("CPM");
 });
+
+
+
+// Uncertainty Graph
+d3.csv('avgError.csv', function(data){
+
+data.forEach(function(d, i){
+    var node = document.createElement("p");
+    str = d.usrname + ", "
+
+    var textnode = document.createTextNode(d.usrname + ", "); 
+   // textnode.style.textShadow =   "2px 5px 5px red"      // Create a text node
+    node.appendChild(textnode); 
+    document.getElementById("myList").appendChild(node); 
+})
+                     // Append the text to <li>
+console.log()
+var childrens = document.getElementById("myList").children;
+console.log(childrens)
+data.forEach(function(d, i){
+
+    console.log(Math.round(d.value))
+    childrens[i].style.textShadow = "0px 0px "+(d.value/10) +"px #000"; ; 
+})
+})
+
+d3.csv('OldTown1small.csv', function(mobileData){
+mobileData.forEach(function(d){
+var timeStamp = d.Timestamp.split(" ");
+time = timeStamp[1].split(':');
+d.hour = +time[0]
+d.min = +time[1]
+d.sec = +time[2]
+d.time = +(time[0]+time[1]+time[2])
+});
+console.log(mobileData[0]);
+d3.csv('OldTownStaticReadings1.csv', function(staticData){
+staticData.forEach(function(d){
+var timeStamp = d.Timestamp.split(" ");
+time = timeStamp[1].split(':');
+d.hour = +time[0]
+d.min = +time[1]
+d.sec = +time[2]
+d.time = +(time[0]+time[1]+time[2])
+});
+console.log(staticData[0]);
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+width = 960 - margin.left - margin.right,
+height = 500 - margin.top - margin.bottom;
+
+/* 
+* value accessor - returns the value to encode for a given data object.
+* scale - maps value to a visual display encoding, such as a pixel position.
+* map function - maps from data value to display value
+* axis - sets up axis
+*/ 
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+var valueline = d3.svg.line()
+.x(function(d) { return xMap(d)})
+.y(function(d) { return yMap(d); });
+// setup x 
+var xValue = function(d) { return d.time;}, // data -> value
+xScale = d3.scale.linear().range([0, width]), // value -> display
+xMap = function(d) { return xScale(xValue(d));}, // data -> display
+xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+// setup y
+var yValue = function(d) { return d.avg;}, // data -> value
+yScale = d3.scale.linear().range([height, 0]), // value -> display
+yMap = function(d) { return yScale(yValue(d));}, // data -> display
+yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+// add the graph canvas to the body of the webpage
+var svg3 = d3.select("#chart").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// don't want dots overlapping axis, so add in buffer to data domain
+xScale.domain([d3.min(mobileData, xValue)-1, d3.max(mobileData, xValue)+1]);
+yScale.domain([d3.min(mobileData, yValue)-1, d3.max(mobileData, yValue)+1]);
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("#chart").append("div")
+.attr("class", "tooltip")
+.style("opacity", 0);
+
+// x-axis
+svg3.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.call(xAxis)
+.append("text")
+.attr("class", "label")
+.attr("x", width)
+.attr("y", -6)
+.style("text-anchor", "end")
+.text("day");
+
+// y-axis
+svg3.append("g")
+.attr("class", "y axis")
+.call(yAxis)
+.append("text")
+.attr("class", "label")
+.attr("transform", "rotate(-90)")
+.attr("y", 6)
+.attr("dy", ".71em")
+.style("text-anchor", "end")
+.text("Average Value");
+
+// draw dots
+svg3.append("path")
+.attr("class", "line")
+.attr("id", "avgMobile")
+.attr("d", valueline(mobileData)) 
+.style("stroke", "red")
+
+svg3.append("path")
+.attr("class", "line")
+.attr("id", "avgStatic")
+.attr("d", valueline(staticData)) 
+.style("stroke", "steelblue")
+    
+// svg.append(".dot")
+//     .data(staticData)
+//   .enter().append("circle")
+//     .attr("class", "dot")
+//     .attr("r", 3.5)
+//     .attr("cx", xMap)
+//     .attr("cy", yMap)
+//     .style("fill", "red") ;
+
+// svg.selectAll(".dot")
+//   .data(mobileData)
+// .enter().append("circle")
+//   .attr("class", "dot")
+//   .attr("r", 3.5)
+//   .attr("cx", xMap)
+//   .attr("cy", yMap)
+//   .style("fill", "steelblue");
+
+// // draw legend
+// var legend = svg.selectAll(".legend")
+//     .data(color.domain())
+//   .enter().append("g")
+//     .attr("class", "legend")
+//     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+// // draw legend colored rectangles
+// legend.append("rect")
+//     .attr("x", width - 18)
+//     .attr("width", 18)
+//     .attr("height", 18)
+//     .style("fill", color);
+
+// // draw legend text
+// legend.append("text")
+//     .attr("x", width - 24)
+//     .attr("y", 9)
+//     .attr("dy", ".35em")
+//     .style("text-anchor", "end")
+//     .text(function(d) { return d;})
+});
+});
+
 
 </script>
