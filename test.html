@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+
+
+<style>
+body {
+  font: 11px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+#myList{
+      height: 400px;
+    width: 10%;
+    float: left;
+    font-size: 15px;
+    color: transparent;
+}
+#chart{
+      height: 400px;
+    width: 70%;
+    float: left;
+}
+</style>
+<body>
+    <div>
+    <div id = "chart">
+      <div id = "locationButtons"></div>
+    </div>
+    <div id="myList"></div></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<script>
+createUncertainLine()
+  function createUncertainLine()
+  {
+
+var locations = ["Palace Hills","Old Town","Safe Town","Southwest","Downtown","Broadview","Cheddarford","Northwest","Wilson Forest","Scenic Vista",
+"Chapparal","Terrapin Springs","Pepper Mill","Easton","Weston","Southton","Oak Willow",
+"East Parton","West Parton"]
+locations.forEach(function(d,i)
+  {
+    var locationButton = document.getElementById("locationButtons");
+    var newButton  = document.createElement("BUTTON");
+    newButton.id=d
+    if(i == 7)
+    {
+      locationButtons.appendChild(document.createElement("p"));
+    }
+    newButton.innerHTML = d;
+    newButton.addEventListener("click", function(e) {
+    recreateGraph(this.id)
+})
+    locationButtons.appendChild(newButton);        
+     
+        
+  });
+
+
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+   var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
+/* 
+ * value accessor - returns the value to encode for a given data object.
+ * scale - maps value to a visual display encoding, such as a pixel position.
+ * map function - maps from data value to display value
+ * axis - sets up axis
+ */ 
+ var x =  d3.time.scale()
+        .range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+var line = d3.svg.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.Value); });
+
+    var valueline = d3.svg.line()
+        .x(function(d) { return xMap(d)})
+        .y(function(d) { return yMap(d); });
+// setup x 
+var xValue = function(d) { return d.date;}, // data -> value
+    xScale = d3.time.scale().range([0, width]), // value -> display
+    xMap = function(d) { return xScale(xValue(d));}, // data -> display
+    xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom").tickFormat(d3.time.format("%m-%d %H:%M"));
+
+// setup y
+var yValue = function(d) { return d.Value;}, // data -> value
+    yScale = d3.scale.linear().range([height, 0]), // value -> display
+    yMap = function(d) { return yScale(yValue(d));}, // data -> display
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+// add the graph canvas to the body of the webpage
+var svg3 = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("#chart").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+    recreateGraph(locations[0])
+
+function recreateGraph(filename)
+  {
+
+    d3.select("#xaxis").remove();
+    d3.select("#yaxis").remove();
+    d3.select("svg").select("#avgMobile").remove();
+    d3.select("#avgStatic").remove();
+                
+    d3.csv(('mobileLocations/' +filename+'Mobile.csv'), function(mobileData){
+    mobileData.forEach(function(d){
+            d.date=parseDate(d.Timestamp)
+            d.Value = +d.Value
+
+    });
+        console.log(mobileData[0]);
+   d3.csv(('staticLocations/' + filename+'Static.csv'), function(staticData){
+        staticData.forEach(function(d){
+            d.date=parseDate(d.Timestamp)
+            d.Value = +d.Value
+    });
+        console.log(staticData[0]);
+        console.log (staticData.length)
+  // don't want dots overlapping axis, so add in buffer to data domain
+  if(mobileData.length == 0 && staticData.length > 0)
+  {
+      xScale.domain(d3.extent(staticData, function(d) { return parseDate(d.Timestamp); }));
+      yScale.domain([d3.min(staticData, yValue)-10,d3.max(staticData, yValue)+10]);
+  }
+   else if(staticData.length == 0 && mobileData.length > 0)
+  {
+      xScale.domain(d3.extent(mobileData, function(d) { return parseDate(d.Timestamp); }));
+      yScale.domain([d3.min(mobileData, yValue)-10,d3.max(mobileData, yValue)+10]);
+  }
+  else{
+  xScale.domain(d3.extent(staticData, function(d) { return parseDate(d.Timestamp); }));
+  yScale.domain([Math.min(d3.min(staticData, yValue), d3.min(mobileData, yValue))-10,
+                Math.max(d3.max(mobileData, yValue), d3.max(staticData, yValue))+10]);
+}
+d3.csv();
+
+  // x-axis
+  svg3.append("g")
+      .attr("class", "line")
+      .attr("id", "xaxis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("day hour:min");
+
+  // y-axis
+  svg3.append("g")
+      .attr("class", "line")
+      .attr("id", "yaxis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("CMP Value hour:min");
+
+  // draw dots
+  if(mobileData.length != 0)
+{  svg3.append("path")
+        .attr("class", "line")
+        .attr("id", "avgMobile")
+        .attr("d", valueline(mobileData)) 
+        .style("stroke", "red")
+        .style("stroke-width", "2px")
+        .style("fill", "none")}
+
+if(staticData.length != 0)
+        {svg3.append("path")
+        .attr("class", "line")
+        .attr("id", "avgStatic")
+        .attr("d", valueline(staticData)) 
+        .style("stroke", "steelblue")
+        .style("stroke-width", "2px")
+        .style("fill", "none")}
+
+
+
+
+});
+});
+}}
+
+</script>
+</body>
+</html>

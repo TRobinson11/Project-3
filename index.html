@@ -64,8 +64,9 @@ body {
   <div>
       <div id = "static"></div>
       <div id="mobile"></div>
-      <div id = "chart"></div>
-      <div id="myList"></div>
+      <div id = "chart">
+        <div id = "locationButtons"></div>
+      </div>
       
   </div>
 
@@ -291,175 +292,175 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
       .text("CPM");
 });
 
+createUncertainLine()
+  function createUncertainLine()
+  {
 
-
-// Uncertainty Graph
-d3.csv('avgError.csv', function(data){
-
-data.forEach(function(d, i){
-    var node = document.createElement("p");
-    str = d.usrname + ", "
-
-    var textnode = document.createTextNode(d.usrname + ", "); 
-   // textnode.style.textShadow =   "2px 5px 5px red"      // Create a text node
-    node.appendChild(textnode); 
-    document.getElementById("myList").appendChild(node); 
+var locations = ["Palace Hills","Old Town","Safe Town","Southwest","Downtown","Broadview","Cheddarford","Northwest","Wilson Forest","Scenic Vista",
+"Chapparal","Terrapin Springs","Pepper Mill","Easton","Weston","Southton","Oak Willow",
+"East Parton","West Parton"]
+locations.forEach(function(d,i)
+  {
+    var locationButton = document.getElementById("locationButtons");
+    var newButton  = document.createElement("BUTTON");
+    newButton.id=d
+    if(i == 7)
+    {
+      locationButtons.appendChild(document.createElement("p"));
+    }
+    newButton.innerHTML = d;
+    newButton.addEventListener("click", function(e) {
+    recreateGraph(this.id)
 })
-                     // Append the text to <li>
-console.log()
-var childrens = document.getElementById("myList").children;
-console.log(childrens)
-data.forEach(function(d, i){
+    locationButtons.appendChild(newButton);        
+     
+        
+  });
 
-    console.log(Math.round(d.value))
-    childrens[i].style.textShadow = "0px 0px "+(d.value/10) +"px #000"; ; 
-})
-})
 
-d3.csv('OldTown1small.csv', function(mobileData){
-mobileData.forEach(function(d){
-var timeStamp = d.Timestamp.split(" ");
-time = timeStamp[1].split(':');
-d.hour = +time[0]
-d.min = +time[1]
-d.sec = +time[2]
-d.time = +(time[0]+time[1]+time[2])
-});
-console.log(mobileData[0]);
-d3.csv('OldTownStaticReadings1.csv', function(staticData){
-staticData.forEach(function(d){
-var timeStamp = d.Timestamp.split(" ");
-time = timeStamp[1].split(':');
-d.hour = +time[0]
-d.min = +time[1]
-d.sec = +time[2]
-d.time = +(time[0]+time[1]+time[2])
-});
-console.log(staticData[0]);
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-width = 960 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom;
-
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+   var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
 /* 
-* value accessor - returns the value to encode for a given data object.
-* scale - maps value to a visual display encoding, such as a pixel position.
-* map function - maps from data value to display value
-* axis - sets up axis
-*/ 
-var x = d3.time.scale().range([0, width]);
+ * value accessor - returns the value to encode for a given data object.
+ * scale - maps value to a visual display encoding, such as a pixel position.
+ * map function - maps from data value to display value
+ * axis - sets up axis
+ */ 
+ var x =  d3.time.scale()
+        .range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
 
-var valueline = d3.svg.line()
-.x(function(d) { return xMap(d)})
-.y(function(d) { return yMap(d); });
+var line = d3.svg.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.Value); });
+
+    var valueline = d3.svg.line()
+        .x(function(d) { return xMap(d)})
+        .y(function(d) { return yMap(d); });
 // setup x 
-var xValue = function(d) { return d.time;}, // data -> value
-xScale = d3.scale.linear().range([0, width]), // value -> display
-xMap = function(d) { return xScale(xValue(d));}, // data -> display
-xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+var xValue = function(d) { return d.date;}, // data -> value
+    xScale = d3.time.scale().range([0, width]), // value -> display
+    xMap = function(d) { return xScale(xValue(d));}, // data -> display
+    xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom").tickFormat(d3.time.format("%m-%d %H:%M"));
 
 // setup y
-var yValue = function(d) { return d.avg;}, // data -> value
-yScale = d3.scale.linear().range([height, 0]), // value -> display
-yMap = function(d) { return yScale(yValue(d));}, // data -> display
-yAxis = d3.svg.axis().scale(yScale).orient("left");
+var yValue = function(d) { return d.Value;}, // data -> value
+    yScale = d3.scale.linear().range([height, 0]), // value -> display
+    yMap = function(d) { return yScale(yValue(d));}, // data -> display
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
 
 
 // add the graph canvas to the body of the webpage
 var svg3 = d3.select("#chart").append("svg")
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)
-.append("g")
-.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// don't want dots overlapping axis, so add in buffer to data domain
-xScale.domain([d3.min(mobileData, xValue)-1, d3.max(mobileData, xValue)+1]);
-yScale.domain([d3.min(mobileData, yValue)-1, d3.max(mobileData, yValue)+1]);
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // add the tooltip area to the webpage
 var tooltip = d3.select("#chart").append("div")
-.attr("class", "tooltip")
-.style("opacity", 0);
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-// x-axis
-svg3.append("g")
-.attr("class", "x axis")
-.attr("transform", "translate(0," + height + ")")
-.call(xAxis)
-.append("text")
-.attr("class", "label")
-.attr("x", width)
-.attr("y", -6)
-.style("text-anchor", "end")
-.text("day");
+    recreateGraph(locations[0])
 
-// y-axis
-svg3.append("g")
-.attr("class", "y axis")
-.call(yAxis)
-.append("text")
-.attr("class", "label")
-.attr("transform", "rotate(-90)")
-.attr("y", 6)
-.attr("dy", ".71em")
-.style("text-anchor", "end")
-.text("Average Value");
+function recreateGraph(filename)
+  {
 
-// draw dots
-svg3.append("path")
-.attr("class", "line")
-.attr("id", "avgMobile")
-.attr("d", valueline(mobileData)) 
-.style("stroke", "red")
+    d3.select("#xaxis").remove();
+    d3.select("#yaxis").remove();
+    d3.select("#avgMobile").remove();
+    d3.select("#avgStatic").remove();
+                
+    d3.csv(('mobileLocations/' +filename+'Mobile.csv'), function(mobileData){
+    mobileData.forEach(function(d){
+            d.date=parseDate(d.Timestamp)
+            d.Value = +d.Value
 
-svg3.append("path")
-.attr("class", "line")
-.attr("id", "avgStatic")
-.attr("d", valueline(staticData)) 
-.style("stroke", "steelblue")
-    
-// svg.append(".dot")
-//     .data(staticData)
-//   .enter().append("circle")
-//     .attr("class", "dot")
-//     .attr("r", 3.5)
-//     .attr("cx", xMap)
-//     .attr("cy", yMap)
-//     .style("fill", "red") ;
+    });
+        console.log(mobileData[0]);
+   d3.csv(('staticLocations/' + filename+'Static.csv'), function(staticData){
+        staticData.forEach(function(d){
+            d.date=parseDate(d.Timestamp)
+            d.Value = +d.Value
+    });
+        console.log(staticData[0]);
+        console.log (staticData.length)
+  // don't want dots overlapping axis, so add in buffer to data domain
+  if(mobileData.length == 0 && staticData.length > 0)
+  {
+      xScale.domain(d3.extent(staticData, function(d) { return parseDate(d.Timestamp); }));
+      yScale.domain([d3.min(staticData, yValue)-10,d3.max(staticData, yValue)+10]);
+  }
+   else if(staticData.length == 0 && mobileData.length > 0)
+  {
+      xScale.domain(d3.extent(mobileData, function(d) { return parseDate(d.Timestamp); }));
+      yScale.domain([d3.min(mobileData, yValue)-10,d3.max(mobileData, yValue)+10]);
+  }
+  else{
+  xScale.domain(d3.extent(staticData, function(d) { return parseDate(d.Timestamp); }));
+  yScale.domain([Math.min(d3.min(staticData, yValue), d3.min(mobileData, yValue))-10,
+                Math.max(d3.max(mobileData, yValue), d3.max(staticData, yValue))+10]);
+}
+d3.csv();
 
-// svg.selectAll(".dot")
-//   .data(mobileData)
-// .enter().append("circle")
-//   .attr("class", "dot")
-//   .attr("r", 3.5)
-//   .attr("cx", xMap)
-//   .attr("cy", yMap)
-//   .style("fill", "steelblue");
+  // x-axis
+  svg3.append("g")
+      .attr("class", "line")
+      .attr("id", "xaxis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("day hour:min");
 
-// // draw legend
-// var legend = svg.selectAll(".legend")
-//     .data(color.domain())
-//   .enter().append("g")
-//     .attr("class", "legend")
-//     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+  // y-axis
+  svg3.append("g")
+      .attr("class", "line")
+      .attr("id", "yaxis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("CMP Value hour:min");
 
-// // draw legend colored rectangles
-// legend.append("rect")
-//     .attr("x", width - 18)
-//     .attr("width", 18)
-//     .attr("height", 18)
-//     .style("fill", color);
+  // draw dots
+  if(mobileData.length != 0)
+{  svg3.append("path")
+        .attr("class", "line")
+        .attr("id", "avgMobile")
+        .attr("d", valueline(mobileData)) 
+        .style("stroke", "red")
+        .style("stroke-width", "2px")
+        .style("fill", "none")}
 
-// // draw legend text
-// legend.append("text")
-//     .attr("x", width - 24)
-//     .attr("y", 9)
-//     .attr("dy", ".35em")
-//     .style("text-anchor", "end")
-//     .text(function(d) { return d;})
+if(staticData.length != 0)
+        {svg3.append("path")
+        .attr("class", "line")
+        .attr("id", "avgStatic")
+        .attr("d", valueline(staticData)) 
+        .style("stroke", "steelblue")
+        .style("stroke-width", "2px")
+        .style("fill", "none")}
+
+
+
+
 });
 });
+}}
 
 
 </script>
