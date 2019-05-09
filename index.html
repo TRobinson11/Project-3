@@ -58,15 +58,27 @@ body {
     width: 70%;
     float: left;
 }
+#legendSpace3{
+    float: right;
+}
 
 </style>
 <body>
   <div>
       <div id = "static"></div>
       <div id="mobile"></div>
+    <div>
       <div id = "chart">
+        <div id = "nbrhood"></div>
         <div id = "locationButtons"></div>
       </div>
+      <div id="usernames"></div>
+      <br>
+      <div id = "legendSpace">
+          <div id = "legendSpace3"></div>
+      </div>
+      <div id = "legendSpace2"></div>
+    </div>
       
   </div>
 
@@ -297,10 +309,89 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
 createUncertainLine()
   function createUncertainLine()
   {
+          // Color list created using: https://gka.github.io/palettes/#colors=#1147FF,#86D8FF,#FFEF67,#FF7D11,#F30000|steps=7|bez=0|coL=0
+        var colors =['#1147ff','#4663ff','#5e7fff','#6f9aff','#7bb5ff','#84d1ff','#a3dbeb','#bfdfcf','#d6e3b4','#e8e897','#f8ed78','#ffe55f','#ffd050','#ffbb41','#ffa531','#ff8f20','#ff7910','#fd6b0b','#fb5a07','#f84803','#f63101','#f30000']
+
+var names = [' CitizenScientist', ' HSS', ' MutantX', ' MySensor', ' PeterLovesCrystals54',
+' Bob', ' TestUnit', ' RadCurieous', ' TaxiDriver', ' AS-3', ' RichardFox', ' XrayLady', ' GermanWrinkler43', ' HiMarkHS', ' ASWillhiem', ' UncleG', ' AS-2', 
+'ProfessorSievert', ' Ckimball', ' AS-1', ' NeutronsAreFreeOfCharge', ' AlwaysGlowing']
+
 
 var locations = ["Palace Hills","Old Town","Safe Town","Southwest","Downtown","Broadview","Cheddarford","Northwest","Wilson Forest","Scenic Vista",
 "Chapparal","Terrapin Springs","Pepper Mill","Easton","Weston","Southton","Oak Willow",
 "East Parton","West Parton"]
+
+
+        var legend = d3.select("#legendSpace").append("svg")
+          .attr("class", "legend")
+        .attr("width", 100)
+        .attr("height", 100)
+        .selectAll("g")
+        .data(['steelblue', 'red'])
+        .enter()
+        .append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d){return d;});
+
+  legend.append("text")
+      .data(['static', 'mobile'])
+        .attr("x", 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .text(function(d){return d;});
+ var legend3 = d3.select("#legendSpace3").append("svg")
+          .attr("class", "legend")
+        .attr("width", 200)
+        .attr("height", 400)
+        .selectAll("g")
+        .data(colors)
+        .enter()
+        .append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend3.append("rect")
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d){return d;});
+
+  legend3.append("text")
+      .data(names)
+        .attr("x", 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .text(function(d){return d;});
+
+
+var legend2 = d3.select("#legendSpace2").append("svg")
+      .attr("class", "legend")
+      .attr("width", 200)
+    .attr("height", 100)
+    .selectAll("g")
+.data(['6,6', '2,2'])
+    .enter()
+    .append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+legend2.append("line")
+    .attr("x1", 40)
+    .attr("x2", 1)
+    .attr("y1", 10)
+    .attr("y2", 10)
+    .style("stroke-dasharray",function(d){return d;})
+    .style("stroke", "black");
+
+legend2.append("text")
+         .data(['higher uncertainty', 'lower uncertainty'])
+        .attr("x", 45)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .text(function(d){return d;});
+
+  
 locations.forEach(function(d,i)
   {
     var locationButton = document.getElementById("locationButtons");
@@ -319,13 +410,40 @@ locations.forEach(function(d,i)
         
   });
 
+ 
+names.forEach( function(d, i){
+var container = document.getElementById('usernames');
+    var newCheckBox = document.createElement("INPUT");
+    newCheckBox.type = 'checkbox';
+    newCheckBox.id = d + 'box'; 
+    newCheckBox.value = d;
+    newCheckBox.innerHTML = d
+   newCheckBox.addEventListener("click", function(e) {
+          updateGraph(this.value)
+})
 
+
+
+    var label = document.createElement('label')
+    label.htmlFor = d + 'box';
+    label.appendChild(document.createTextNode(d));
+
+    container.appendChild(newCheckBox);
+    container.appendChild(label);
+
+
+ 
+});       
+     
+
+document.getElementById('nbrhood').value = "Palace Hills"
+document.getElementById('nbrhood').innerHTML = "<h1>" + document.getElementById('nbrhood').value
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
    var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
-var formatDate = d3.time.format("%Y-%m-%d %H:%M:%S");
+var formatDate = d3.time.format("%d %H:%M");
 /* 
  * value accessor - returns the value to encode for a given data object.
  * scale - maps value to a visual display encoding, such as a pixel position.
@@ -372,28 +490,76 @@ var tooltip = d3.select("#chart").append("div")
 
     recreateGraph(locations[0])
 
+function updateGraph(user)
+{
+  var checked = document.getElementById(user+"box").checked;
+    nbrhood = document.getElementById("nbrhood").value;
+    if (checked != true) {
+     removeLine(user);
+    }
+    else{
+      recreateGraph(nbrhood)
+    }
+}
+
+function removeLine(user)
+{
+  d3.selectAll("circle").filter(function(d, i) {
+    
+   return d.User == user;
+  }).remove();
+}
+
 function recreateGraph(filename)
   {
+    nbrhood = document.getElementById("nbrhood").value;
+    document.getElementById('nbrhood').innerHTML = "<h1>" + filename
+    document.getElementById('nbrhood').value = filename
 
-    d3.select("#xaxis").remove();
-    d3.select("#yaxis").remove();
-    d3.select("#avgMobile").remove();
-    d3.select("#avgStatic").remove();
+    // if (nbrhood== filename)
+    // {
+    //     d3.csv(('usr/' +filename+'Mobile.csv'), function(mobileData){
+    //     mobileData.forEach(function(d){
+    //         d.date=parseDate(d.Timestamp)
+    //         d.Value = +d.Value
+
+    // });
+    // }
+      d3.select("#xaxis").remove();
+      d3.select("#yaxis").remove();
+      d3.select("#avgMobile").remove();
+      d3.select("#avgStatic").remove();
+
+      names.forEach(
+      function(d){
+       var checked = document.getElementById(d+"box").checked;
+ 
+       if(checked)
+        removeLine(d)
+       // document.getElementById(d+"box").checked = false;
+      })
+
+      mobileAvg =0
+      mobileCount = 0
+      staticAvg = 0
+      staticCount = 0
                 
     d3.csv(('mobileLocations/' +filename+'Mobile.csv'), function(mobileData){
-    mobileData.forEach(function(d){
+    mobileData.forEach(function(d,i){
             d.date=parseDate(d.Timestamp)
             d.Value = +d.Value
+            mobileAvg += d.Value
+            d.SD = +d.SD
+            d.avg = mobileAvg/i
 
     });
-        console.log(mobileData[0]);
    d3.csv(('staticLocations/' + filename+'Static.csv'), function(staticData){
-        staticData.forEach(function(d){
+        staticData.forEach(function(d,i){
             d.date=parseDate(d.Timestamp)
             d.Value = +d.Value
-    });
-        console.log(staticData[0]);
-        console.log (staticData.length)
+            staticAvg += d.Value
+            d.avg = staticAvg/i
+        });
   // don't want dots overlapping axis, so add in buffer to data domain
   if(mobileData.length == 0 && staticData.length > 0)
   {
@@ -436,12 +602,20 @@ d3.csv();
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("CMP Value hour:min");
+      .text("CMP Value");
 
-  // draw dots
+
+
+
   if(mobileData.length != 0)
 {  svg3.append("path")
         .attr("class", "line")
+        .style("stroke-dasharray", function()
+        {
+          val = d3.sum(mobileData, function(d){return parseFloat(d.SD);})/mobileData.length
+          
+          return(val+", 5")
+        })
         .attr("id", "avgMobile")
         .attr("d", valueline(mobileData)) 
         .style("stroke", "red")
@@ -452,12 +626,93 @@ if(staticData.length != 0)
         {svg3.append("path")
         .attr("class", "line")
         .attr("id", "avgStatic")
+        .style("stroke-dasharray", function()
+        {
+          val = d3.sum(staticData, function(d){return parseFloat(d.SD);})/staticData.length
+         
+          return(val+", 5")
+        })
         .attr("d", valueline(staticData)) 
         .style("stroke", "steelblue")
         .style("stroke-width", "2px")
         .style("fill", "none")}
+  names.forEach(
+    function(dName)
+    {  
+
+          nbrhood = document.getElementById("nbrhood").value;
+      var checked = document.getElementById(dName+"box").checked;
+      if (checked == true)
+      {
+        filename = 'usrs/' + dName.replace(" ", "")+"Agg.csv"
+    d3.csv(filename,
+      function(usrData1){
+      usrData = usrData1.filter(function(d){
+       return (d.Location == nbrhood);})
+   
+        usrData.forEach(
+
+          function(d,i)
+          {
+            timeData = mobileData.filter(function(a) { return a.Timestamp == d.Timestamp})
+            d.date=parseDate(d.Timestamp)
+            d.Value = +d.Value
+
+            d.uc = (Math.abs(timeData[0].Value - d.Value))/timeData[0].SD
+          });
 
 
+              svg3.selectAll(".dot")
+      .data(usrData)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("id", dName.replace(" ", ""))
+      .attr("r", 3)
+      .style("opacity", function(d,i)
+      {
+        if (d.uc > 1)
+        {
+          console.log(d.Timestamp)
+          console.log(d.uc)
+        }
+        if (d.uc != 0)
+          return(.9/(d.uc*2))
+        return(.9)
+      })
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill", function(d)
+      {
+        return colors[names.indexOf(dName)]
+      }) 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d.User + "<br/>" +formatDate(xValue(d)) + "<br/>" + yValue(d))
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
+
+  //     d3.selectAll('circle')
+  // .attr('stdDeviation',"0");
+        //     svg3.append("path")
+        // .attr("class", "line")
+        // .attr("id", dName.replace(" ", ""))
+        // .attr("d", valueline(usrData)) 
+        // .style("stroke", "black")
+        // .style("stroke-width", "2px")
+        // .style("fill", "none")
+
+      })
+      }
+
+    });
 
 
 });
