@@ -61,7 +61,7 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    c. Indicated where you would deploy more sensors to improve radiation monitoring in the city. Would you recommend more static sensors or more mobile sensors or both? Use your visualization of radiation measurement uncertainty to justify your recommendation.
 
 
-I would place at least one static sensor in every location. In the map depicted below there are several areas where there is no sensors, so for the static data, there is none. If there were more static sensors then you would be able to see the radiation levels in ALL locations, not just the seven locations. Mobile sensors seemed to cover all areas fairly well, so I wouldn't add more of those.
+I would place at least one static sensor in every location. In the map depicted below there are several areas where there is no sensors, so for the static data, there are no records of radiation. If there were more static sensors then you would be able to see the radiation levels in ALL locations, not just the seven locations. Mobile sensors seemed to cover all areas fairly well, so I wouldn't add more of those.
 
 ![Static](Static-avg.JPG)
 
