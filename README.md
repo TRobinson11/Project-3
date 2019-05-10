@@ -50,6 +50,8 @@ Questions:
 
    5. The data for this challenge can be analyzed either as a static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.
    
+      We got our data as a static collection. I think for answering the question of what areas are most effected this is adequate. However, if this were being used for an emergency alert system, dynamic would be better. I also think that for better results dynamic would be better, but with the already large datasize provided we were at our limit. If this challenge were to be expanded, we would need a server and a database for sure.
+
    
 
 
