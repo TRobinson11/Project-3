@@ -65,11 +65,11 @@ Through our data we can propose a number of actions to take into account for the
 When looking at the differences between the Static and Mobile sensors, we can see that the Static sensors do not record any long concurrent periods of any increases in CPM measurements, instead it only shows spikes in the CPM readings during specific times. However the Mobile data clearly shows several periods of the sensors entering regions and locations where the CPM measurements are well over 1000 CPM. This can be chalked up to the Static sensors not being placed in good positions, and therefore not getting any meaningful data, however the Static sensors also play the very important role of providing a baseline of the average CPM measurements in a specific region. The Static sensors also show how these regions are affected by natural and man-made disasters by continually taking measurements over time. The Mobile sensors on the other hand play the role of showing the most heavily affected areas by having the ability to go to them directly. Combined with the Static sensors we can see how the radiation spreads, and predict how each region will be affected over time. We can also use this data to determine the source of the radiation and if possible remove it or clean it up to prevent further contamination. 
 
 
-![Static](Static-id.jpg)
+![Static](Static-id.JPG)
 
-![Static](Static-avg.jpg)
+![Static](Static-avg.JPG)
 
-![Static](Mobile-avg.jpg)
+![Static](Mobile-avg.JPG)
 
 
 ####   5. The data for this challenge can be analyzed either as a static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.
