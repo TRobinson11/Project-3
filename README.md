@@ -31,3 +31,18 @@ Questions:
 
 
    5. The data for this challenge can be analyzed either as a static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.
+   
+   
+   
+#### Todd Robinson’s Contributions:
+
+For my part of the project I designed a scatterplot in order to properly display the data from the sensors. I used separate graphs for the Static sensors and the Mobile sensors. The Static sensor graph includes the ID of the sensors, the CPM detected by the sensors and the timestamps of each detection. The Mobile sensor graph also has the ID, CPM, and Timestamps, as well as the Longitude and Latitude of the sensors at each timestamp due to the sensors being mobile.
+
+In order to display this data, I did remove the lower half of the “safe” levels of CPM due to them only showing the baseline average of the CPM in the areas before the incident took place, as well as not being the primary purpose of this challenge which was to show the heavily irradiated areas, and discover if the readings from the sensors could be trusted.
+
+In my findings, I saw that on average the CPM measurements detected by the Mobile sensors were more than double the CPM measurements detected by the Static Sensors. Also as time increased you can see an overall increase in CPM measurements in both sensors. 
+
+In this challenge the major goal was to detect uncertainty and find out if the sensors were working properly. In both graphs many isolated measurements can be seen, however due to a lack of data to predict other factors I cannot rule out these isolated measurements as being false positives or errors in the sensors. In both graphs reliable data can be observed in the form of either concurrent similar readings or concurrently increasing readings from one or more sensors, such as sensor 12 and 13’s spikes in the Static sensors graph, and the increasing, stabilizing, and decreasing of sensors 21, 24, 25, 27, 28, 29, 45 in the Mobile sensors graph.
+
+![Static](Static-Sensors-Graph-edit.JPG)
+
