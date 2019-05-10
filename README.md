@@ -42,9 +42,18 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    2. Downtown
    3. Oldtown
    
+   
+![Static](Uncertainty-downtown.JPG)
+
+![Static](Uncertainty-oldtown.JPG)
+
+   
    Areas that had the greatest uncertainty with only mobile data are:
    1. Wilson Foreset
-   
+
+
+![Static](Uncertainty-wilson.JPG)
+
     
 #####   b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
    
