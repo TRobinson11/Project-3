@@ -34,6 +34,9 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    4. germanWrinkler
    5. ProfessorSievert
    
+   Below is an image of Ckimball's readings for Broadview. The cluster of readins if off by itself and sing the transparency is low for several of the point we can conclude that it has a high uncertainty value and thus not reliable.
+   ![Static](ckimball.PNG)
+   
  #####  a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
    
    The regions with the greatest uncertainty of radiation (where there were both static and dynamic sensors) are:
