@@ -47,6 +47,8 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    
     
    b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
+   
+   After the earthquake the sensor readings begin to increase as time passes due to various factors that are not all accounted for in the data. We can also see a major increase in the number of isolated sensor readings in both the Static and the Mobile sensors. While these isolated readings could normally be seen as unreliable, they do however follow a similar pattern to the more clustered readings which shows that they may not be as unreliable as one might think. These events all contribute to uncertainty in different ways. The increase in the average CPM challenges the normal baseline average used to determine uncertainty in the graphs, and the increasing isolated readings increase the uncertainty in the graph, even though the isolated readings may be caused by other factors.
 
 ####   3. Given the uncertainty you observed in question 2, are the radiation measurements reliable enough to locate areas of concern?
 
