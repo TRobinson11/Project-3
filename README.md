@@ -17,6 +17,8 @@ In our findings, we saw that on average the CPM measurements detected by the Mob
 
 In both graphs many isolated measurements can be seen, however due to a lack of data to predict other factors we cannot rule out these isolated measurements as being false positives or errors in the sensors. In both graphs reliable data can be observed in the form of either concurrent similar readings or concurrently increasing readings from one or more sensors, such as sensor 12 and 13’s spikes in the Static sensors graph, and the increasing, stabilizing, and decreasing of sensors 21, 24, 25, 27, 28, 29, 45 in the Mobile sensors graph. The map also shows how the Mobile sensors have an increased average compared to the Static sensors, and displays which regions are more heavily affected by radiation, through using heat maps to display the average CPM measurements.
 
+![Static](Static-Sensors.jpg)
+
 
  ####  2. Use visual analytics to represent and analyze uncertainty in the measurement of radiation across the city.
 
