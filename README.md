@@ -59,6 +59,8 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    The bigest area of concerns are Northwest, Oak Willow and Chapparal. They should be concerned however it does not appear that these cars are causing dangerously high radiation levels. It appears that the cars are leaving Safe Town through Cheddarford, East Parton and Easton. They are probably then residing at Northwest, Oak Willow and Chapparal. We determine this through tracking upward "ticks" in the radiation readings for the drive through areas and the longer periods of radiation spikes in the neighborhoods of residence.
    
 #####   b.Estimate how many cars may have been contaminated when coolant leaked from the Always Safe plant. Use visual analysis of radiation measurements to determine if any have left the area.
+
+By observing the "tick" marks in the graph we can determine approximently how many cars have left the Safe town area. An estimate of about 20 cars have left Safe Town and are contaminating surrounding areas. As mentioned previously the drivers appear to be leaving Safe Town through Cheddarford, East Parton and Easton where they are then staying at Northwest, Oak Willow and Chapparal 
    
 #####   c. Indicated where you would deploy more sensors to improve radiation monitoring in the city. Would you recommend more static sensors or more mobile sensors or both? Use your visualization of radiation measurement uncertainty to justify your recommendation.
 
