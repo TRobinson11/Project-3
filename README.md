@@ -50,7 +50,11 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
 
 ####   3. Given the uncertainty you observed in question 2, are the radiation measurements reliable enough to locate areas of concern?
 
+   Yes the radiation measurements are still certain enough to trust there measurments with but with the understanding that the mobile units read higher than the static units.  When there is an even that causes an increased reading the mobile units tend to respond the these at a disproprtionally high level.
+
    a. Highlight potential locations of contamination, including the locations of contaminated cars. Should St. Himark officials be worried about contaminated cars moving around the city?
+   
+   The bigest area of concerns are Northwest, Oak Willow and Chapparal. They should be concerned however it does not appear that these cars are causing dangerously high radiation levels. It appears that the cars are leaving Safe Town through Cheddarford, East Parton and Easton. They are probably then residing at Northwest, Oak Willow and Chapparal. We determine this through tracking upward "ticks" in the radiation readings for the drive through areas and the longer periods of radiation spikes in the neighborhoods of residence.
    
    b.Estimate how many cars may have been contaminated when coolant leaked from the Always Safe plant. Use visual analysis of radiation measurements to determine if any have left the area.
    
