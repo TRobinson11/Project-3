@@ -93,19 +93,26 @@ d3.csv("StaticSensorReadings.csv", function(error, cpm) {
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom().scale(x).tickFormat(d3.timeFormat("%m-%d %H:%M")))
-        .append("text")
+        .call(d3.axisBottom().scale(x).tickFormat(d3.timeFormat("%m-%d %H:%M")));
+        
+
+    svg.append("text")
         .attr("class", "label")
         .attr("x", width)
-        .attr("y", -6)
+        .attr("y", -3)
+        .attr("font-size", "20px")
         .attr("text-anchor", "end")
-        .text("Date");
+        .text("Static Sensors Graph");
+
+ 
 
     // Add a y-axis with label.
     svg.append("g")
         .attr("class", "y axis")
-        .call(d3.axisLeft().scale(y))
-        .append("text")
+        .call(d3.axisLeft().scale(y));
+        
+
+    svg.append("text")
         .attr("class", "label")
         .attr("y", 6)
         .attr("dy", ".71em")
@@ -161,7 +168,7 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
                 .style("left", d3.event.pageX - 50 + "px")
                 .style("top", d3.event.pageY + 20 + "px")
                 .style("display", "inline-block")
-                .html("Sensor-ID = " + (d.id) + "<br>" + (d.cpm) + " CPM" + "<br>" + "Timestamp: " + (d.date) + "<br>" + "Longitude: " + (d.long) + " Latitude: " + (d.lat) + "<br>" + "User-id: " + (d.userid));
+                .html("Sensor-ID = " + (d.id) + "<br>" + (d.cpm) + " CPM" + "<br>" + "Timestamp: " + (d.date) + "<br>" + "Longitude: " + (d.long) + " Latitude: " + (d.lat));
         })
         .on("mouseout", function(d){ tooltip.style("display", "none");});
 
@@ -195,19 +202,23 @@ d3.csv("MobileSensorReadings.csv", function(error, cpm) {
     svg1.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom().scale(x).tickFormat(d3.timeFormat("%m-%d %H:%M")))
-        .append("text")
+        .call(d3.axisBottom().scale(x).tickFormat(d3.timeFormat("%m-%d %H:%M")));
+
+    svg1.append("text")
         .attr("class", "label")
         .attr("x", width)
-        .attr("y", -6)
+        .attr("y", -3)
+        .attr("font-size", "20px")
         .attr("text-anchor", "end")
-        .text("Date");
+        .text("Mobile Sensors Graph");
 
     // Add a y-axis with label.
     svg1.append("g")
         .attr("class", "y axis")
-        .call(d3.axisLeft().scale(y))
-        .append("text")
+        .call(d3.axisLeft().scale(y));
+        
+    
+    svg1.append("text")
         .attr("class", "label")
         .attr("y", 6)
         .attr("dy", ".71em")
@@ -256,7 +267,7 @@ function createUncertainLine()
     var legend3 = d3.select("#legendSpace3").append("svg")
         .attr("class", "legend")
         .attr("width", 200)
-        .attr("height", 500)
+        .attr("height", 400)
         .selectAll("g")
         .data(colors)
         .enter()
