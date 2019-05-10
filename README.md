@@ -56,6 +56,14 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    
    c. Indicated where you would deploy more sensors to improve radiation monitoring in the city. Would you recommend more static sensors or more mobile sensors or both? Use your visualization of radiation measurement uncertainty to justify your recommendation.
 
+
+![Static](Uncertainty-1.JPG)
+
+![Static](Uncertainty-2.JPG)
+
+![Static](Uncertainty-3.JPG)
+
+
 ####   4. Summarize the state of radiation measurements at the end of the available period. Use your novel visualizations and analysis approaches to suggest a course of action for the city. Use visual analytics to compare the static sensor network to the mobile sensor network. What are the strengths and weaknesses of each approach? How do they support each other?
    
    At the end of the available period we saw a steep increase in the average CPM measured by both the Static sensors and the Mobile sensors. Not only do the more reliable and clustered CPM measurements increase, but we also saw an increase in the more isolated measurements through the available period. This shows that the isolated measurements may be caused by other factors that we cannot detect due to insufficient data, and that the isolated measurements may be more reliable and necessary than we initially imagined. 
