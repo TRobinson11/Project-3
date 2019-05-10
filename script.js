@@ -1,7 +1,7 @@
 //http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
 function updateStatic() {
     d3.json('StHimark.geojson', geojson => {
-        d3.selectAll("#map").transition().style("opacity", -5).duration(50).remove();
+        d3.selectAll("#map").transition().style("opacity", -5).duration(5).remove();
 
 
         let width = 400, height = 400;
@@ -228,7 +228,7 @@ function updateStatic() {
 };
 function updateMobile() {
     d3.json('StHimark.geojson', geojson => {
-        d3.selectAll("#map").transition().style("opacity", -5).duration(50).remove();
+        d3.selectAll("#map").transition().style("opacity", -5).duration(5).remove();
         let width = 400, height = 400;
         let projection = d3.geoEquirectangular().scale(1).translate([0, 0]);
 
