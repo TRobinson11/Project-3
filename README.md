@@ -15,7 +15,25 @@ Questions:
 
    Compare uncertainty of the static sensors to the mobile sensors. What anomalies can you see? Are there sensors that are too uncertain to trust?
    
+   The static sensors consistantly have a lower reading than the mobile sensors. More so when ever an even occurs the is a larger "jump" in the mobile data than in the static data. 
+   Some of these sensors are unreliable a list of a few that were deemed unreliable are:
+   1. Ckimball
+   2. UncleG
+   3. TestUnit
+   4. germanWrinkler
+   5. ProfessorSievert
+   
    a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
+   
+   The regions with the greatest uncertainty of radiation (where there were both static and dynamic sensors) are:
+   
+   1. Palace Hill
+   2. Downtown
+   3. Oldtown
+   
+   Areas that had the greatest uncertainty with only mobile data are:
+   1. Wilson Foreset
+   
     
    b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
 
