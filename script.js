@@ -1,7 +1,7 @@
 //http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
 function updateStatic() {
     d3.json('StHimark.geojson', geojson => {
-        d3.selectAll("#map").transition().style("opacity", -5).duration(500).remove();
+        d3.selectAll("#map").transition().style("opacity", -5).duration(50).remove();
 
 
         let width = 400, height = 400;
@@ -50,10 +50,10 @@ function updateStatic() {
             .attr("id","map");
 
 
-        d3.csv('StaticSensorReadingsreid.csv', function (staticSensorReadings) {
+        //d3.csv('StaticSensorReadingsreid.csv', function (staticSensorReadings) {
             //color.domain([0, 1, 2, 3,4,5,6,7,8,9]); // setting the range of the input data
 
-
+/*
             var sensorReading = staticSensorReadings.map(function (d) {
                 let newItem = {};
                 newItem.Timestamp = d.Timestamp;
@@ -61,31 +61,32 @@ function updateStatic() {
                 newItem.id = d.id;
                 return newItem;
             })
-
+*/
 
             d3.json('StHimark.geojson', function (json) {
 
 
                 d3.csv('StaticSensorLocationsreid.csv', function (staticSensorLocations) {
-                    staticSensorLocations = staticSensorLocations.map(item => {
-                        item.Lat = +item.Lat;
-                        item.Long = +item.Long;
-                        return item;
-                    });
                     /*
-                                            let ssLocationToIdObj = {}; //save this
-                                            staticSensorLocations.forEach(ssloc => {
-                                                let loc = getLocation(geojson, [ssloc.Long, ssloc.Lat]);
-                                                ssLocationToIdObj[loc] = ssloc.id;
-                                                console.log(ssLocationToIdObj);
-                                            });
+                   staticSensorLocations = staticSensorLocations.map(item => {
+                       item.Lat = +item.Lat;
+                       item.Long = +item.Long;
+                       return item;
+                   });
 
-                                            let nestedBySensorId = d3.nest().key(d => d.id).entries(sensorReading);
-                                            let ssIdToAvgReadingValue = {}; //save this
-                                            nestedBySensorId.forEach(ssrow => {
-                                                ssIdToAvgReadingValue[ssrow.key] = d3.mean(ssrow.values.map(d => d.Value));
-                                            });
-                    */
+                                           let ssLocationToIdObj = {}; //save this
+                                           staticSensorLocations.forEach(ssloc => {
+                                               let loc = getLocation(geojson, [ssloc.Long, ssloc.Lat]);
+                                               ssLocationToIdObj[loc] = ssloc.id;
+                                               console.log(ssLocationToIdObj);
+                                           });
+
+                                           let nestedBySensorId = d3.nest().key(d => d.id).entries(sensorReading);
+                                           let ssIdToAvgReadingValue = {}; //save this
+                                           nestedBySensorId.forEach(ssrow => {
+                                               ssIdToAvgReadingValue[ssrow.key] = d3.mean(ssrow.values.map(d => d.Value));
+                                           });
+                   */
                     let ssLocationToIdObj = {'Broadview': "11",
                         Cheddarford: "14",
                         Downtown: "4",
@@ -161,9 +162,10 @@ function updateStatic() {
                             return projection([d.Long, d.Lat])[1];
                         })
                         .attr("r", function (d) {
-                            return Math.sqrt(d.id) * 4;
+                            //return Math.sqrt(d.id) * 4;
+                            return 9;
                         })
-                        .style("fill", "rgb(217,91,67)")
+                        .style("fill", "rgb(0,0,255)")
                         .style("opacity", 0.85)
 
                         // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
@@ -189,7 +191,7 @@ function updateStatic() {
                             alert("display data for the selected one.");
 
                         });
-                });
+               // });
                 /*
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
                 var legend = d3.select("body").append("svg")
@@ -226,7 +228,7 @@ function updateStatic() {
 };
 function updateMobile() {
     d3.json('StHimark.geojson', geojson => {
-        d3.selectAll("#map").transition().style("opacity", -5).duration(500).remove();
+        d3.selectAll("#map").transition().style("opacity", -5).duration(50).remove();
         let width = 400, height = 400;
         let projection = d3.geoEquirectangular().scale(1).translate([0, 0]);
 
@@ -271,10 +273,10 @@ function updateMobile() {
             .attr("id","map");
 
 
-        d3.csv('MobileSensorReadingsreid.csv', function (mobileSensorReadings) {
+
             //color.domain([0, 1, 2, 3,4,5,6,7,8,9]); // setting the range of the input data
 
-
+/*
             var sensorReading = mobileSensorReadings.map(function (d) {
                 let newItem = {};
                 newItem.Timestamp = d.Timestamp;
@@ -282,18 +284,19 @@ function updateMobile() {
                 newItem.id = d.id;
                 return newItem;
             })
-
+*/
 
             d3.json('StHimark.geojson', function (json) {
 
 
-                d3.csv('MobileSensorReadingsreid.csv', function (mobileSensorLocations) {
+               // d3.csv('MobileSensorReadingsreid.csv', function (mobileSensorLocations) {
+                    /*
                     mobileSensorLocations = mobileSensorLocations.map(item => {
                         item.Lat = +item.Lat;
                         item.Long = +item.Long;
                         return item;
                     });
-
+*/
 
                     let ssLocationToIdObj = {Broadview: "25",
                         Chapparal: "47",
@@ -541,7 +544,7 @@ function updateMobile() {
                                             });
 
                      */
-                });
+
                 /*
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
                 var legend = d3.select("body").append("svg")
@@ -571,7 +574,7 @@ function updateMobile() {
                                     });
 
                  */
-            });
+            //});
         });
 
     });
