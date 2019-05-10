@@ -44,5 +44,4 @@ In my findings, I saw that on average the CPM measurements detected by the Mobil
 
 In this challenge the major goal was to detect uncertainty and find out if the sensors were working properly. In both graphs many isolated measurements can be seen, however due to a lack of data to predict other factors I cannot rule out these isolated measurements as being false positives or errors in the sensors. In both graphs reliable data can be observed in the form of either concurrent similar readings or concurrently increasing readings from one or more sensors, such as sensor 12 and 13’s spikes in the Static sensors graph, and the increasing, stabilizing, and decreasing of sensors 21, 24, 25, 27, 28, 29, 45 in the Mobile sensors graph.
 
-![Static](Static-Sensors.PNG)
 
