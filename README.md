@@ -14,7 +14,8 @@ Questions:
    2. Use visual analytics to represent and analyze uncertainty in the measurement of radiation across the city.
 
    Compare uncertainty of the static sensors to the mobile sensors. What anomalies can you see? Are there sensors that are too uncertain to trust?
-    a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
+   
+   a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
     
    b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
 
