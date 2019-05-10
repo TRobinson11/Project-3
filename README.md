@@ -34,7 +34,7 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    4. germanWrinkler
    5. ProfessorSievert
    
-   a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
+ #####  a. Which regions of the city have greater uncertainty of radiation measurement? Use visual analytics to explain your rationale.
    
    The regions with the greatest uncertainty of radiation (where there were both static and dynamic sensors) are:
    
@@ -46,7 +46,7 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
    1. Wilson Foreset
    
     
-   b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
+#####   b. What effects do you see in the sensor readings after the earthquake and other major events? What effect do these events have on uncertainty?
    
    After the earthquake the sensor readings begin to increase as time passes due to various factors that are not all accounted for in the data. We can also see a major increase in the number of isolated sensor readings in both the Static and the Mobile sensors. While these isolated readings could normally be seen as unreliable, they do however follow a similar pattern to the more clustered readings which shows that they may not be as unreliable as one might think. These events all contribute to uncertainty in different ways. The increase in the average CPM challenges the normal baseline average used to determine uncertainty in the graphs, and the increasing isolated readings increase the uncertainty in the graph, even though the isolated readings may be caused by other factors.
 
@@ -54,13 +54,13 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
 
    Yes the radiation measurements are still certain enough to trust there measurments with but with the understanding that the mobile units read higher than the static units.  When there is an even that causes an increased reading the mobile units tend to respond the these at a disproprtionally high level.
 
-   a. Highlight potential locations of contamination, including the locations of contaminated cars. Should St. Himark officials be worried about contaminated cars moving around the city?
+#####   a. Highlight potential locations of contamination, including the locations of contaminated cars. Should St. Himark officials be worried about contaminated cars moving around the city?
    
    The bigest area of concerns are Northwest, Oak Willow and Chapparal. They should be concerned however it does not appear that these cars are causing dangerously high radiation levels. It appears that the cars are leaving Safe Town through Cheddarford, East Parton and Easton. They are probably then residing at Northwest, Oak Willow and Chapparal. We determine this through tracking upward "ticks" in the radiation readings for the drive through areas and the longer periods of radiation spikes in the neighborhoods of residence.
    
-   b.Estimate how many cars may have been contaminated when coolant leaked from the Always Safe plant. Use visual analysis of radiation measurements to determine if any have left the area.
+#####   b.Estimate how many cars may have been contaminated when coolant leaked from the Always Safe plant. Use visual analysis of radiation measurements to determine if any have left the area.
    
-   c. Indicated where you would deploy more sensors to improve radiation monitoring in the city. Would you recommend more static sensors or more mobile sensors or both? Use your visualization of radiation measurement uncertainty to justify your recommendation.
+#####   c. Indicated where you would deploy more sensors to improve radiation monitoring in the city. Would you recommend more static sensors or more mobile sensors or both? Use your visualization of radiation measurement uncertainty to justify your recommendation.
 
 
 I would place at least one static sensor in every location. In the map depicted below there are several areas where there is no sensors, so for the static data, there are no records of radiation. If there were more static sensors then you would be able to see the radiation levels in ALL locations, not just the seven locations. Mobile sensors seemed to cover all areas fairly well, so I wouldn't add more of those.
