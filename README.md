@@ -19,6 +19,8 @@ In both graphs many isolated measurements can be seen, however due to a lack of 
 
 ![Static](Static-Sensors.jpg)
 
+![Static](Mobile-Sensors.png)
+
 
  ####  2. Use visual analytics to represent and analyze uncertainty in the measurement of radiation across the city.
 
