@@ -1,6 +1,8 @@
 # Project-3
 Data Visualization
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/D9F_XF9jP60/0.jpg)](https://www.youtube.com/watch?v=https://youtu.be/D9F_XF9jP60)
+
 Visualization Link: https://trobinson11.github.io/Project-3/
 
 ### Task:
